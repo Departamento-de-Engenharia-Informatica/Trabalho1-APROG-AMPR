@@ -28,7 +28,7 @@ public class main {
         SaidaPlaneamento(planeamento);
 
         //=========Saída do total de Kms(b)=========
-        totalKms(l,c);
+        totalKms(planeamento);
 
     }
 
@@ -47,8 +47,7 @@ public class main {
 
 
     public static void SaidaPlaneamento(int[][] planeamento) {
-
-
+        System.out.printf("a) planeamento (km/dia/veículo)\n");
         System.out.printf("%-6s", "dia:");
         for (int j = 0; j < planeamento[0].length; j++) {
             System.out.printf("|%6d", j);
@@ -69,8 +68,15 @@ public class main {
         }
     }
 
-    public static void totalKms(int l, int c) {
-
+    public static void totalKms(int[][] planeamento) {
+        System.out.printf("\nb) total de km a percorrer\n");
+        for (int i = 0; i < planeamento.length; i++) {
+            int totalKms = 0;
+            for (int j = 0; j < planeamento[0].length; j++) {
+                totalKms += planeamento[i][j];
+            }
+            System.out.printf("V%-1d :     %4d km\n", i, totalKms);
+        }
     }
 
 }
