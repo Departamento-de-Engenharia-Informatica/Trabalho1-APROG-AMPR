@@ -22,12 +22,14 @@ public class main {
         int l,c;
         Scanner ler = new Scanner(System.in);
 
-        //===========Leitura de Dados (a)==========
+        //===========Leitura de Dados e Saída do Planeamento (a)==========
         textoDesc = ler.nextLine();
         int[][] planeamento = lerPlaneamento(ler);
-
-        //=========Saída do Planeamento(b)=========
         SaidaPlaneamento(planeamento);
+
+        //=========Saída do total de Kms(b)=========
+        totalKms(l,c);
+
     }
 
 
@@ -67,5 +69,8 @@ public class main {
         }
     }
 
+    public static void totalKms(int l, int c) {
+
+    }
 
 }
