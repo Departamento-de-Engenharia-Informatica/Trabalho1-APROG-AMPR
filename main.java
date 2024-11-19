@@ -1,6 +1,20 @@
 import java.util.Scanner;
 
 public class main {
+
+    public static int[][] lerPlaneamento(Scanner ler) {
+        int l = ler.nextInt();
+        int c = ler.nextInt();
+
+        int[][] planeamento = new int[l][c];
+        for (int i = 0; i < l; i++) {
+            for (int j = 0; j < c; j++) {
+                planeamento[i][j] = ler.nextInt();
+            }
+        }
+        return planeamento;
+    }
+
     public static void main(String[] args) {
 
         //=========Declaração de variáveis=========
@@ -10,10 +24,7 @@ public class main {
 
         //===========Leitura de Dados (a)==========
         textoDesc = ler.nextLine();
-        l=ler.nextInt();
-        c=ler.nextInt();
-        int[][] planeamento = new int[l][c];
-        for(int i=0 ; i<l; i++) for(int j=0 ; j<c; j++) planeamento[i][j]=ler.nextInt();
+        int[][] planeamento = lerPlaneamento(ler);
 
         //=========Saída do Planeamento(b)=========
         SaidaPlaneamento(planeamento);
