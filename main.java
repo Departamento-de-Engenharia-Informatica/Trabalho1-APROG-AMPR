@@ -18,6 +18,11 @@ public class main {
 
         //=========Recarga das Baterias(c)=========
         RecargaBaterias(planeamento);
+
+        //=========Carga Final do Dia(d)=========
+        CargaFinalDia(planeamento);
+
+
     }
     public static void RecargaBaterias(int[][] planeamento){
         int cargaAtual,nrCargas;
@@ -55,6 +60,7 @@ public class main {
         }
     }
     public static void SaidaPlaneamento(int[][] planeamento) {
+        System.out.printf("a) planeamento (km/dia/veículo)\n");
         System.out.printf("%4s", "dia:");
         for (int j = 0; j < planeamento[0].length; j++) {
             System.out.printf(" %8d", j);
@@ -95,5 +101,36 @@ public class main {
             }
         }
         return planeamento;
+    }
+
+    public static void CargaFinalDia(int[][] planeamento) {
+        System.out.printf("\nd) carga das baterias \n");
+        System.out.printf("%4s", "dia:");
+        for (int j = 0; j < planeamento[0].length; j++) {
+            System.out.printf(" %8d", j);
+        }
+        System.out.println();
+
+        System.out.print("----|");
+        for (int j = 0; j < planeamento[0].length; j++) {
+            System.out.print("--------|");
+        }
+        System.out.println();
+
+        for (int i = 0; i < planeamento.length; i++) {
+            int bateria = 100;
+            System.out.printf("V%d  :", i);
+            for (int j = 0; j < planeamento[i].length; j++) {
+                bateria -= planeamento[i][j];
+                if (bateria <= -100) {
+                    bateria +=200;
+                }
+                else if (bateria <= 0) {
+                    bateria += 100;
+                }
+                System.out.printf(" %7d ", bateria);
+            }
+            System.out.println();
+        }
     }
 }
