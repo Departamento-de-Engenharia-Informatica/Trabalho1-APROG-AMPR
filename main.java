@@ -15,10 +15,10 @@ public class main {
         SaidaPlaneamento(planeamento);
 
         //=========Saída do total de Kms(b)=========
-        totalKms(planeamento);
+        TotalKms(planeamento);
 
         //=========Recarga das Baterias(c)=========
-
+        RecargaBaterias(planeamento);
     }
 
 
@@ -28,7 +28,11 @@ public class main {
 
 
 
+    public static void RecargaBaterias(int[][] planeamento){
+        int cargaAtual=100;
+        System.out.printf("c) recargas das baterias\n");
 
+    }
 
 
 
@@ -36,30 +40,31 @@ public class main {
 
 
     public static void SaidaPlaneamento(int[][] planeamento) {
-        System.out.printf("a) planeamento (km/dia/veículo)\n");
-        System.out.printf("%-6s", "dia :");
+        System.out.printf("%4s", "dia:");
         for (int j = 0; j < planeamento[0].length; j++) {
-            System.out.printf("%8d", j);
+            System.out.printf(" %8d", j);
         }
-        System.out.printf("%n");
+        System.out.println();
 
         System.out.print("----|");
         for (int j = 0; j < planeamento[0].length; j++) {
             System.out.print("--------|");
         }
-        System.out.printf("%n");
+        System.out.println();
 
         for (int i = 0; i < planeamento.length; i++) {
-            System.out.printf("%-6s", "V" + i + "  :");
-            for (int j = 0; j < planeamento[0].length; j++) {
-                System.out.printf("%8d", planeamento[i][j]);
+            System.out.printf("V%d  :", i);
+            for (int j = 0; j < planeamento[i].length; j++) {
+                System.out.printf(" %7d ", planeamento[i][j]);
             }
-            System.out.printf("%n");
+            System.out.println();
         }
     }
 
 
-    public static void totalKms(int[][] planeamento) {
+
+
+    public static void TotalKms(int[][] planeamento) {
         System.out.printf("\nb) total de km a percorrer\n");
         for (int i = 0; i < planeamento.length; i++) {
             int totalKms = 0;
