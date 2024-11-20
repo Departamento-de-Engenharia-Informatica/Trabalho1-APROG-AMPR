@@ -1,7 +1,6 @@
 import java.util.Scanner;
 
 public class main {
-
     public static void main(String[] args) {
 
         //=========Declaração de variáveis=========
@@ -20,25 +19,41 @@ public class main {
         //=========Recarga das Baterias(c)=========
         RecargaBaterias(planeamento);
     }
-
-
-
-
-
-
-
-
     public static void RecargaBaterias(int[][] planeamento){
-        int cargaAtual=100;
+        int cargaAtual,nrCargas;
         System.out.printf("c) recargas das baterias\n");
-
+        System.out.printf("%4s", "dia:");
+        for (int j = 0; j < planeamento[0].length; j++) {
+            System.out.printf(" %8d", j);
+        }
+        System.out.println();
+        System.out.print("----|");
+        for (int j = 0; j < planeamento[0].length; j++) {
+            System.out.print("--------|");
+        }
+        System.out.println();
+        for (int i = 0; i < planeamento.length; i++) {
+            cargaAtual=100;
+            nrCargas=0;
+            System.out.printf("V%d  :", i);
+            for(int j=0; j< planeamento[i].length; j++){
+                if(cargaAtual>planeamento[i][j]){
+                    cargaAtual-=planeamento[i][j];
+                    System.out.printf(" %7d ", nrCargas);
+                }
+                else{
+                   while(cargaAtual<=planeamento[i][j]){
+                       cargaAtual+=100;
+                       nrCargas++;
+                   }
+                   cargaAtual-=planeamento[i][j];
+                    System.out.printf(" %7d ", nrCargas);
+                }
+                nrCargas=0;
+            }
+            System.out.println();
+        }
     }
-
-
-
-
-
-
     public static void SaidaPlaneamento(int[][] planeamento) {
         System.out.printf("%4s", "dia:");
         for (int j = 0; j < planeamento[0].length; j++) {
@@ -60,10 +75,6 @@ public class main {
             System.out.println();
         }
     }
-
-
-
-
     public static void TotalKms(int[][] planeamento) {
         System.out.printf("\nb) total de km a percorrer\n");
         for (int i = 0; i < planeamento.length; i++) {
@@ -74,11 +85,9 @@ public class main {
             System.out.printf("V%-1d :     %4d km\n", i, totalKms);
         }
     }
-
     public static int[][] lerPlaneamento(Scanner ler) {
         int l = ler.nextInt();
         int c = ler.nextInt();
-
         int[][] planeamento = new int[l][c];
         for (int i = 0; i < l; i++) {
             for (int j = 0; j < c; j++) {
@@ -87,5 +96,4 @@ public class main {
         }
         return planeamento;
     }
-
 }
