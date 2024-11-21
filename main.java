@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 public class main {
+
     public static void main(String[] args) {
 
         //=========Declaração de variáveis=========
@@ -81,6 +82,10 @@ public class main {
             System.out.println();
         }
     }
+
+
+
+
     public static void TotalKms(int[][] planeamento) {
         System.out.printf("\nb) total de km a percorrer\n");
         for (int i = 0; i < planeamento.length; i++) {
@@ -91,9 +96,11 @@ public class main {
             System.out.printf("V%-1d :     %4d km\n", i, totalKms);
         }
     }
+
     public static int[][] lerPlaneamento(Scanner ler) {
         int l = ler.nextInt();
         int c = ler.nextInt();
+
         int[][] planeamento = new int[l][c];
         for (int i = 0; i < l; i++) {
             for (int j = 0; j < c; j++) {
@@ -118,19 +125,15 @@ public class main {
         System.out.println();
 
         for (int i = 0; i < planeamento.length; i++) {
-            int bateria = 100;
+            float bateria = 100;
             System.out.printf("V%d  :", i);
             for (int j = 0; j < planeamento[i].length; j++) {
                 bateria -= planeamento[i][j];
-                if (bateria <= -100) {
-                    bateria +=200;
-                }
-                else if (bateria <= 0) {
-                    bateria += 100;
-                }
-                System.out.printf(" %7d ", bateria);
+                while(bateria<=0)bateria+=100;
+                System.out.printf("%7.1f%% ", bateria);
             }
             System.out.println();
         }
     }
+
 }
