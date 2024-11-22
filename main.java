@@ -1,6 +1,9 @@
 import java.util.Scanner;
 
 public class main {
+    //=====DECLARAÇÃO DE VARIÁVEIS CONSTANTES=====
+    public static final double CUSTORECARGA = 5.5;
+    public static final int DiaX=4;
 
     public static void main(String[] args) {
 
@@ -29,6 +32,107 @@ public class main {
 
         //=========Media Km Frota(e)=========
         arrayMediaKmFrota = MediaKmFrota(planeamento);
+
+        //=======Desl. Acima da Média da Frota(f)=======
+        DeslAcimaMedia(planeamento,arrayMediaKmFrota);
+
+        //=====Carregados Mais Dias Consecutivos(g)=====
+        CarrDiasConsec(matrizQntRecargas);
+
+        //=====Dias Mais Tardio Carregamento Global(h)=====
+        DiaMaisTardio(matrizQntRecargas);
+
+        //======Custo das Recargas da Frota(i)======
+        CustoRecargas(matrizQntRecargas);
+
+        //=====Veículo de Prevenção no dia X(j)=====
+        VeiculoPrevencao(planeamento,matrizCargaFinalDia);
+    }
+    public static void VeiculoPrevencao(int[][] planeamento, double[][] matrizCargaFinalDia) {
+        int veiculoPrevencao = -1;
+        int menorUso = Integer.MAX_VALUE;
+        double maiorCarga = -1;
+
+        for (int i = 0; i < planeamento.length; i++) {
+            int usoDoDia = planeamento[i][DiaX];
+            double cargaFinal = matrizCargaFinalDia[i][DiaX];
+            if (usoDoDia < menorUso || (usoDoDia == menorUso && cargaFinal > maiorCarga) || (usoDoDia == menorUso && cargaFinal == maiorCarga && i < veiculoPrevencao)) {
+                veiculoPrevencao = i;
+                menorUso = usoDoDia;
+                maiorCarga = cargaFinal;
+            }
+        }
+
+        if (veiculoPrevencao != -1) {
+            System.out.println("\nj) Veículo de prevenção no dia " + DiaX + " : V" + veiculoPrevencao);
+        } else {
+            System.out.println("Nenhum veículo disponível para prevenção.");
+        }
+    }
+
+    public static void CustoRecargas(int[][] matrizQntRecargas){
+        int nrRecargas=0;
+        for(int i=0;i<matrizQntRecargas.length; i++){
+            for(int j=0; j<matrizQntRecargas[i].length;j++)nrRecargas+=matrizQntRecargas[i][j];
+        }
+        if (nrRecargas != 0) System.out.println(String.format("\ni) custo das recargas da frota: %.2f€", nrRecargas * CUSTORECARGA));
+        else System.out.println("Não existem recargas a fazer (Custo: 0€)");
+    }
+    public static void DiaMaisTardio(int[][] matrizQntRecargas){
+        boolean carregamentoGeral=false;
+        int dia=0;
+        while(!carregamentoGeral && dia<matrizQntRecargas[0].length){
+            boolean carregamentoGeralAux = true;
+            for(int i=0;i<matrizQntRecargas.length; i++){
+                if(matrizQntRecargas[i][dia]==0) carregamentoGeralAux =false;
+            }
+            if(carregamentoGeralAux) carregamentoGeral=true;
+            dia++;
+        }
+        if (carregamentoGeral) System.out.println("\nh) Dia mais tardio em que todos os veículos necessitam de recarregar: " + (dia-1));
+        else System.out.println("\nh) Não há dia em que todos os veículos necessitam de recarga.");
+
+    }
+    public static void CarrDiasConsec(int[][] matrizQntRecargas){
+        int dias,diasVeiculo,maiorSeq=0;
+        String veiculos="";
+        for(int i=0;i<matrizQntRecargas.length; i++){
+            dias=0;
+            diasVeiculo=0;
+            for (int j = 0; j < matrizQntRecargas[i].length; j++) {
+                if (matrizQntRecargas[i][j] != 0) dias++;
+                else {
+                    if (dias > diasVeiculo) diasVeiculo = dias;
+                    dias = 0;
+                }
+            }
+
+            if (dias > diasVeiculo) diasVeiculo = dias;
+            if(diasVeiculo>maiorSeq){
+                maiorSeq=diasVeiculo;
+                veiculos="[ V"+i+" ]";
+            }
+            else if(diasVeiculo==maiorSeq) veiculos+=" [ V"+i+" ]";
+        }
+        System.out.println("\ng) veículos com mais dias consecutivas a necessitar de recarga");
+        if(maiorSeq>0) System.out.println(maiorSeq + " dias consecutivos, veículos : " + veiculos);
+        else System.out.println("Os veículos não carregam dias consecutivos");
+    }
+    public static void DeslAcimaMedia(int[][] planeamento, double[]arrayMediaKmFrota){
+        boolean acima;
+        String veiculos="";
+        int count=0;
+        System.out.println("\nf) deslocações sempre acima da média diária");
+        for(int i=0;i<planeamento.length; i++){
+            acima=true;
+            for(int j=0;j<planeamento[i].length;j++) if(planeamento[i][j]<arrayMediaKmFrota[i]) acima=false;
+            if(acima){
+                count+=1;
+                veiculos+="[ V"+i+" ] ";
+            }
+        }
+        if(count>=1) System.out.println(count + " veículos : "+ veiculos);
+        else System.out.println("Não existem veículos com deslocações sempre acima da média diária");
     }
     public static double[] MediaKmFrota(int[][] planeamento) {
         double[] arrayMediaKmFrota = new double[planeamento[0].length];
@@ -68,7 +172,7 @@ public class main {
             cargaAtual = 100;
             for (int j = 0; j < planeamento[i].length; j++) {
                 nrCargas = 0;
-                if (cargaAtual < planeamento[i][j]) {
+                if (cargaAtual <= planeamento[i][j]) {
                     while (cargaAtual <= planeamento[i][j]) {
                         cargaAtual += 100;
                         nrCargas++;
@@ -186,5 +290,4 @@ public class main {
             System.out.println();
         }
     }
-
 }
