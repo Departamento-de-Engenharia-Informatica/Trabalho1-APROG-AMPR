@@ -1,10 +1,11 @@
 import java.util.Scanner;
-
+import java.io.File;
+import java.io.FileNotFoundException;
 public class main {
     //=====DECLARAÇÃO DE VARIÁVEIS CONSTANTES=====
     public static final double CUSTORECARGA = 5.5;
     public static final int DiaX=4;
-
+    public static final String CAMINHO_FICHEIRO="C:/Users/afoli/Downloads/planeamento.txt";
     public static void main(String[] args) {
 
         //=========Declaração de variáveis=========
@@ -13,12 +14,24 @@ public class main {
         int[][] planeamento,matrizQntRecargas;
         double[][] matrizCargaFinalDia;
         String textoDesc;
-        int l,c;
+        int l,c,ficheiro;
+
         Scanner ler = new Scanner(System.in);
 
         //===========Leitura de Dados e Saída do Planeamento (a)==========
-        textoDesc = ler.nextLine();
-        planeamento = lerPlaneamento(ler);
+        System.out.println("INSERIR DADOS FICHEIRO - 1\nINSERIR MANUALMENTE - 2");
+        ficheiro = ler.nextInt();
+        ler.nextLine();
+
+        if (ficheiro == 1) {
+            planeamento = lerPlaneamentoFicheiro(CAMINHO_FICHEIRO);
+        } else if (ficheiro == 2) {
+            textoDesc = ler.nextLine();
+            planeamento = lerPlaneamento(ler);
+        } else {
+            System.out.println("Opção inválida.");
+            return;
+        }
         SaidaPlaneamento(planeamento);
 
         //=========Saída do total de Kms(b)=========
@@ -69,7 +82,6 @@ public class main {
             System.out.println("Nenhum veículo disponível para prevenção.");
         }
     }
-
     public static void CustoRecargas(int[][] matrizQntRecargas){
         int nrRecargas=0;
         for(int i=0;i<matrizQntRecargas.length; i++){
@@ -288,6 +300,26 @@ public class main {
                 System.out.printf(" %7d ", planeamento[i][j]);
             }
             System.out.println();
+        }
+    }
+    public static int[][] lerPlaneamentoFicheiro(String caminhoFicheiro) {
+        try (Scanner ficheiro = new Scanner(new File(caminhoFicheiro))) {
+            String descricao = ficheiro.nextLine();
+            System.out.println("Descrição do ficheiro: " + descricao);
+
+            int l = ficheiro.nextInt();
+            int c = ficheiro.nextInt();
+
+            int[][] planeamento = new int[l][c];
+            for (int i = 0; i < l; i++) {
+                for (int j = 0; j < c; j++) {
+                    planeamento[i][j] = ficheiro.nextInt();
+                }
+            }
+            return planeamento;
+        } catch (FileNotFoundException e) {
+            System.out.println("Ficheiro não encontrado: " + e.getMessage());
+            return null;
         }
     }
 }
