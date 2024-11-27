@@ -235,23 +235,28 @@ public class main {
     public static int[][] lerPlaneamento(Scanner ler) {
         int l, c;
         do {
-            System.out.println("Digite o número de linhas e o número de dias (colunas):");
+            System.out.println("Digite o número de linhas (veículos) e o número de dias (colunas):");
             l = ler.nextInt();
             c = ler.nextInt();
-
-            if (c < DiaX) System.out.println("Erro: DiaX (" + DiaX + ") é maior que o número de dias (colunas).\n");
-        } while (c < DiaX);
-
-        System.out.println("Insira o planeamento (valores da matriz):");
+            if (l <= 0 || c <= 0) System.out.println("Erro: O número de linhas e colunas deve ser positivo.\n");
+            else if (c < DiaX) System.out.println("Erro: DiaX (" + DiaX + ") é maior que o número de dias (colunas).\n");
+        } while (l <= 0 || c <= 0 || c < DiaX);
+        System.out.println("Insira o planeamento (valores da matriz, positivos):");
         int[][] planeamento = new int[l][c];
 
         for (int i = 0; i < l; i++) {
             for (int j = 0; j < c; j++) {
-                planeamento[i][j] = ler.nextInt();
+                int valor;
+                do {
+                    valor = ler.nextInt();
+                    if (valor < 0) System.out.println("Erro: Valor tem de ser positivo.");
+                } while (valor < 0);
+                planeamento[i][j] = valor;
             }
         }
         return planeamento;
     }
+
 
     public static double[][] CargaFinalDia(int[][] planeamento) {
         double[][] matrizCargaFinalDia = new double[planeamento.length][planeamento[0].length];
