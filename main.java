@@ -233,10 +233,18 @@ public class main {
         return totalKmArray;
     }
     public static int[][] lerPlaneamento(Scanner ler) {
-        int l = ler.nextInt();
-        int c = ler.nextInt();
+        int l, c;
+        do {
+            System.out.println("Digite o número de linhas e o número de dias (colunas):");
+            l = ler.nextInt();
+            c = ler.nextInt();
 
+            if (c < DiaX) System.out.println("Erro: DiaX (" + DiaX + ") é maior que o número de dias (colunas).\n");
+        } while (c < DiaX);
+
+        System.out.println("Insira o planeamento (valores da matriz):");
         int[][] planeamento = new int[l][c];
+
         for (int i = 0; i < l; i++) {
             for (int j = 0; j < c; j++) {
                 planeamento[i][j] = ler.nextInt();
@@ -244,6 +252,7 @@ public class main {
         }
         return planeamento;
     }
+
     public static double[][] CargaFinalDia(int[][] planeamento) {
         double[][] matrizCargaFinalDia = new double[planeamento.length][planeamento[0].length];
         //OBTER MATRIZ
