@@ -82,9 +82,7 @@ public class main {
     }
     public static void CustoRecargas(double[][] matrizQntRecargas){
         int nrRecargas=0;
-        for(int i=0;i<matrizQntRecargas.length; i++){
-            for(int j=0; j<matrizQntRecargas[i].length;j++)nrRecargas+=matrizQntRecargas[i][j];
-        }
+        for(int i=0;i<matrizQntRecargas.length; i++) for(int j=0; j<matrizQntRecargas[i].length;j++)nrRecargas+=matrizQntRecargas[i][j];
         if (nrRecargas != 0) System.out.println(String.format("\ni) custo das recargas da frota: %.2f€", nrRecargas * CUSTORECARGA));
         else System.out.println("Não existem recargas a fazer (Custo: 0€)");
     }
@@ -249,26 +247,9 @@ public class main {
         //VISUALIZAR MATRIZ
 
         System.out.println("\nd) Carga das baterias:");
+        SaidaMatrizes(matrizCargaFinalDia,"d");
 
-        System.out.printf("%4s", "dia:");
-        for (int j = 0; j < planeamento[0].length; j++) {
-            System.out.printf(" %8d", j);
-        }
-        System.out.println();
 
-        System.out.print("----|");
-        for (int j = 0; j < planeamento[0].length; j++) {
-            System.out.print("--------|");
-        }
-        System.out.println();
-
-        for (int i = 0; i < matrizCargaFinalDia.length; i++) {
-            System.out.printf("V%d  :", i);
-            for (int j = 0; j < matrizCargaFinalDia[i].length; j++) {
-                System.out.printf("%7.1f%% ", matrizCargaFinalDia[i][j]);
-            }
-            System.out.println();
-        }
         return matrizCargaFinalDia;
     }
     public static void SaidaMatrizes(double[][] matriz,String exercicio) {
@@ -287,7 +268,7 @@ public class main {
             for (int i = 0; i < matriz.length; i++) {
                 System.out.printf("V%d  :", i);
                 for (int j = 0; j < matriz[i].length; j++) {
-                    System.out.printf(exercicio.equals("c") ? " %7.0f " : (exercicio.equals("d") ? " %7.1f%% " : " %7.1f "), matriz[i][j]);
+                    System.out.printf(exercicio.equals("c") ? " %7.0f " : (exercicio.equals("d") ? " %6.1f%% " : " %7.1f "), matriz[i][j]);
                 }
                 System.out.println();
             }
