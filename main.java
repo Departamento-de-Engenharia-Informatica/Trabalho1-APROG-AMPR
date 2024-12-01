@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 public class main {
     //=====DECLARAÇÃO DE VARIÁVEIS CONSTANTES=====
     public static final double CUSTORECARGA = 5.5;
-    public static final int DiaX=4;
+    public static final int DIAX=4;
     public static final String CAMINHO_FICHEIRO="C:/Users/afoli/Downloads/planeamento.txt";
     public static void main(String[] args) {
 
@@ -65,8 +65,8 @@ public class main {
         double maiorCarga = -1;
 
         for (int i = 0; i < planeamento.length; i++) {
-            double usoDoDia = planeamento[i][DiaX];
-            double cargaFinal = matrizCargaFinalDia[i][DiaX];
+            double usoDoDia = planeamento[i][DIAX];
+            double cargaFinal = matrizCargaFinalDia[i][DIAX];
             if (usoDoDia < menorUso || (usoDoDia == menorUso && cargaFinal > maiorCarga) || (usoDoDia == menorUso && cargaFinal == maiorCarga && i < veiculoPrevencao)) {
                 veiculoPrevencao = i;
                 menorUso = usoDoDia;
@@ -75,7 +75,7 @@ public class main {
         }
 
         if (veiculoPrevencao != -1) {
-            System.out.println("\nj) Veículo de prevenção no dia " + DiaX + " : V" + veiculoPrevencao);
+            System.out.println("\nj) Veículo de prevenção no dia " + DIAX + " : V" + veiculoPrevencao);
         } else {
             System.out.println("Nenhum veículo disponível para prevenção.");
         }
@@ -101,31 +101,40 @@ public class main {
         else System.out.println("\nh) Não há dia em que todos os veículos necessitam de recarga.");
 
     }
-    public static void CarrDiasConsec(double[][] matrizQntRecargas){
-        int dias,diasVeiculo,maiorSeq=0;
-        String veiculos="";
-        for(int i=0;i<matrizQntRecargas.length; i++){
-            dias=0;
-            diasVeiculo=0;
+    public static void CarrDiasConsec(double[][] matrizQntRecargas) {
+        int dias, diasVeiculo, maiorSeq = 0;
+        String veiculos = "";
+
+        for (int i = 0; i < matrizQntRecargas.length; i++) {
+            dias = 0;
+            diasVeiculo = 0;
+
             for (int j = 0; j < matrizQntRecargas[i].length; j++) {
-                if (matrizQntRecargas[i][j] != 0) dias++;
-                else {
+                if (matrizQntRecargas[i][j] != 0) {
+                    dias++;
+                } else {
                     if (dias > diasVeiculo) diasVeiculo = dias;
                     dias = 0;
                 }
             }
-
             if (dias > diasVeiculo) diasVeiculo = dias;
-            if(diasVeiculo>maiorSeq){
-                maiorSeq=diasVeiculo;
-                veiculos="[ V"+i+" ]";
+            if (diasVeiculo >= 2) {
+                if (diasVeiculo > maiorSeq) {
+                    maiorSeq = diasVeiculo;
+                    veiculos = "[ V" + i + " ]";
+                } else if (diasVeiculo == maiorSeq) {
+                    veiculos += " [ V" + i + " ]";
+                }
             }
-            else if(diasVeiculo==maiorSeq) veiculos+=" [ V"+i+" ]";
         }
-        System.out.println("\ng) veículos com mais dias consecutivas a necessitar de recarga");
-        if(maiorSeq>0) System.out.println(maiorSeq + " dias consecutivos, veículos : " + veiculos);
-        else System.out.println("Os veículos não carregam dias consecutivos");
+        System.out.println("\ng) Veículos com mais dias consecutivos a necessitar de recarga");
+        if (maiorSeq >= 2) {
+            System.out.println(maiorSeq + " dias consecutivos, veículos: " + veiculos);
+        } else {
+            System.out.println("Nenhum veículo carregou por 2 ou mais dias consecutivos.");
+        }
     }
+
     public static void DeslAcimaMedia(double[][] planeamento, double[]arrayMediaKmFrota){
         boolean acima;
         String veiculos="";
@@ -214,8 +223,8 @@ public class main {
             l = ler.nextInt();
             c = ler.nextInt();
             if (l <= 0 || c <= 0) System.out.println("Erro: O número de linhas e colunas deve ser positivo.\n");
-            else if (c < DiaX) System.out.println("Erro: DiaX (" + DiaX + ") é maior que o número de dias (colunas).\n");
-        } while (l <= 0 || c <= 0 || c < DiaX);
+            else if (c < DIAX) System.out.println("Erro: DiaX (" + DIAX + ") é maior que o número de dias (colunas).\n");
+        } while (l <= 0 || c <= 0 || c < DIAX);
         System.out.println("Insira o planeamento (valores da matriz, positivos):");
         double[][] planeamento = new double[l][c];
 
